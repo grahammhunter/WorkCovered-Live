@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-label="Work Covered favicon">
+<rect width="80" height="80" rx="10" fill="#164E45" />
+<g transform="translate(8 8)">
+<path data-part="open-c-ring" d="M48.5 17.5A21 21 0 1 0 49 46" fill="none" stroke="#F5B82E" stroke-width="6" stroke-linecap="round" />
+<path data-part="mark-w" d="M17 25 24.5 44 32 27 39.5 44 47 25" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+<path data-part="tick" d="M45 40 49 46 58 34" fill="none" stroke="#E8EFEB" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+</g>
+</svg>

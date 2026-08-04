@@ -1,0 +1,9 @@
+{
+  "name": "Work Covered",
+  "short_name": "Work Covered",
+  "description": "Managed calls, bookings and routine admin for busy service businesses.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f4f7f4",
+  "theme_color": "#164e45"
+}

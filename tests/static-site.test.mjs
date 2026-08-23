@@ -44,3 +44,8 @@ test("page has no external script source", () => {
   const scripts = [...html.matchAll(/<script\b[^>]*\bsrc=["']([^"']+)["']/gi)].map((match) => match[1]);
   assert.deepEqual(scripts, ["assets/js/site.js"]);
 });
+
+test("native CSS preserves the prototype content-box geometry", async () => {
+  const css = await readFile(new URL("../assets/css/site.css", import.meta.url), "utf8");
+  assert.equal(css.includes("*,*::before,*::after{box-sizing:border-box}"), false);
+});

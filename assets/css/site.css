@@ -1,6 +1,6 @@
 
 html{scroll-behavior:smooth}
-[id]{scroll-margin-top:5rem}
+[id]{scroll-margin-top:4.75rem}
 body{margin:0;background:#0F1A15;color:#EDECE1;font-family:'Archivo',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
 a{color:#D9A441;text-decoration:none}a:hover{color:#EDECE1}
 ::selection{background:#D9A441;color:#0F1A15}

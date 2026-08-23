@@ -12,7 +12,7 @@ import {
   nextLayerForVisibility,
   nextTypedFrame,
   validateAssessment,
-} from "./site-data.js";
+} from "./site-data.js?v=20260823-call-parity-2";
 
 const state = {
   hero: { eventIndex: 0, web: 61, voice: 82 },

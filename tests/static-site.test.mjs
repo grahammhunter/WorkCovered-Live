@@ -55,12 +55,13 @@ test("page retains core parity copy", () => {
 
 test("page has no external script source", () => {
   const scripts = [...html.matchAll(/<script\b[^>]*\bsrc=["']([^"']+)["']/gi)].map((match) => match[1]);
-  assert.deepEqual(scripts, ["assets/js/site.js?v=20260823-call-parity"]);
+  assert.deepEqual(scripts, ["assets/js/site.js?v=20260823-call-parity-2"]);
 });
 
 test("browser modules use Hostinger-compatible JavaScript extensions", async () => {
   const siteJs = await readFile(new URL("../assets/js/site.js", import.meta.url), "utf8");
   assert.equal(siteJs.includes(".mjs"), false);
+  assert.match(siteJs, /from "\.\/site-data\.js\?v=20260823-call-parity-2"/);
   await access(new URL("../assets/js/site-data.js", import.meta.url));
 });
 

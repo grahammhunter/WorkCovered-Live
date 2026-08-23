@@ -380,7 +380,23 @@ function setPreviewOutcome(outcome) {
   });
 }
 
+function handleSectionLink(event) {
+  const link = event.target.closest("a[href^='#']");
+  const sectionId = link?.getAttribute("href");
+  if (!sectionId || sectionId === "#") return false;
+
+  const section = document.querySelector(sectionId);
+  if (!section) return false;
+
+  event.preventDefault();
+  section.scrollIntoView();
+  history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
+  return true;
+}
+
 function handleClick(event) {
+  if (handleSectionLink(event)) return;
+
   const control = event.target.closest("[data-action]");
   if (!control) return;
 
@@ -418,6 +434,10 @@ function initializeSite() {
   renderJourney(0);
   renderSector("garages");
   setPreviewOutcome("success");
+
+  if (window.location.hash && document.querySelector(window.location.hash)) {
+    history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
+  }
 
   document.addEventListener("click", handleClick);
   document.addEventListener("keydown", (event) => {

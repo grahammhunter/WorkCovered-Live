@@ -19,7 +19,7 @@ test("all required native sections are present", () => {
 });
 
 test("production stylesheet is versioned for CDN-safe brand updates", () => {
-  assert.match(html, /assets\/css\/site\.css\?v=20260823-logo/);
+  assert.match(html, /assets\/css\/site\.css\?v=20260823-call-parity/);
 });
 
 test("native production files exist", async () => {
@@ -55,7 +55,7 @@ test("page retains core parity copy", () => {
 
 test("page has no external script source", () => {
   const scripts = [...html.matchAll(/<script\b[^>]*\bsrc=["']([^"']+)["']/gi)].map((match) => match[1]);
-  assert.deepEqual(scripts, ["assets/js/site.js?v=20260823-clean-url"]);
+  assert.deepEqual(scripts, ["assets/js/site.js?v=20260823-call-parity"]);
 });
 
 test("browser modules use Hostinger-compatible JavaScript extensions", async () => {

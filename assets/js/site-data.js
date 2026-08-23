@@ -180,6 +180,53 @@ export const CALL_SCRIPT = [
   },
 ];
 
+export const CALL_DIAL_NUMBER = "0161 496 0000";
+
+export function nextDialFrame(index) {
+  const nextIndex = Math.min(CALL_DIAL_NUMBER.length, Math.max(0, Number(index) || 0) + 1);
+  return {
+    text: CALL_DIAL_NUMBER.slice(0, nextIndex),
+    nextIndex,
+    complete: nextIndex >= CALL_DIAL_NUMBER.length,
+  };
+}
+
+export function nextTypedFrame(text, index) {
+  const source = String(text ?? "");
+  const nextIndex = Math.min(source.length, Math.max(0, Number(index) || 0) + 2);
+  return {
+    text: source.slice(0, nextIndex),
+    nextIndex,
+    complete: nextIndex >= source.length,
+  };
+}
+
+export function callTypingInterval(durationSeconds, textLength) {
+  const duration = Number(durationSeconds);
+  const length = Math.max(1, Math.ceil((Number(textLength) || 0) / 2));
+  if (!Number.isFinite(duration) || duration <= 0) return 34;
+  return Math.max(14, (duration * 1000 - 600) / length);
+}
+
+export function callPresentation(phase, speaker) {
+  const playing = phase === "playing";
+  return {
+    showDialler: phase === "dialling" || phase === "connecting",
+    showConnectedCall: phase === "playing" || phase === "ending" || phase === "done",
+    showStop: phase === "dialling" || phase === "connecting" || phase === "playing" || phase === "ending",
+    showReplay: phase === "done",
+    customerSpeaking: playing && speaker === "customer",
+    agentSpeaking: playing && speaker === "agent",
+  };
+}
+
+export function nextLayerForVisibility(currentLayer, isIntersecting) {
+  const layer = Number(currentLayer);
+  if (isIntersecting && layer < 0) return 0;
+  if (!isIntersecting && layer > 0) return 0;
+  return layer;
+}
+
 export function nextHeroState(state) {
   const eventIndex = (state.eventIndex + 1) % HERO_EVENTS.length;
   const nextEvent = HERO_EVENTS[eventIndex];

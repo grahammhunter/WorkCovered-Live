@@ -1,23 +1,35 @@
 import {
   CALL_SCRIPT,
+  CALL_DIAL_NUMBER,
   HERO_EVENTS,
   JOURNEY_STATIONS,
   SECTORS,
+  callPresentation,
+  callTypingInterval,
   formatCallClock,
+  nextDialFrame,
   nextHeroState,
+  nextLayerForVisibility,
+  nextTypedFrame,
   validateAssessment,
 } from "./site-data.js";
 
 const state = {
   hero: { eventIndex: 0, web: 61, voice: 82 },
-  layer: 0,
+  layer: -1,
   station: 0,
   sector: "garages",
   previewOutcome: "success",
   call: {
-    active: false,
+    phase: "idle",
+    speaker: null,
+    dialIndex: 0,
     seconds: 0,
     audio: null,
+    clockInterval: null,
+    dialInterval: null,
+    typingInterval: null,
+    statusInterval: null,
     timers: new Set(),
     intervals: new Set(),
   },
@@ -49,6 +61,18 @@ function repeat(callback, delay) {
   return interval;
 }
 
+function clearScheduled(timer) {
+  if (timer == null) return;
+  window.clearTimeout(timer);
+  state.call.timers.delete(timer);
+}
+
+function clearRepeated(interval) {
+  if (interval == null) return;
+  window.clearInterval(interval);
+  state.call.intervals.delete(interval);
+}
+
 function updateHero() {
   const web = document.querySelector("#hero-web-count");
   const voice = document.querySelector("#hero-voice-count");
@@ -66,10 +90,12 @@ function advanceHero() {
 }
 
 function updateLayer(index = state.layer) {
-  state.layer = Math.max(0, Math.min(2, Number(index)));
+  const requestedLayer = Number(index);
+  state.layer = requestedLayer < 0 ? -1 : Math.max(0, Math.min(2, requestedLayer));
+  const selectedLayer = Math.max(0, state.layer);
 
   document.querySelectorAll("#layers [role='tab'][data-action='select-layer']").forEach((button) => {
-    const active = Number(button.dataset.index) === state.layer;
+    const active = Number(button.dataset.index) === selectedLayer;
     button.setAttribute("aria-selected", String(active));
     button.style.borderColor = active ? "#D9A441" : "rgba(237,236,225,.2)";
     button.style.background = active ? "#D9A441" : "none";
@@ -77,7 +103,7 @@ function updateLayer(index = state.layer) {
   });
 
   document.querySelectorAll("#layers .layer-panel").forEach((panel, panelIndex) => {
-    const active = panelIndex === state.layer;
+    const active = panelIndex === selectedLayer;
     panel.style.opacity = active ? "1" : "0";
     panel.style.transform = active ? "translateY(0)" : "translateY(12px)";
     panel.style.pointerEvents = active ? "auto" : "none";
@@ -86,6 +112,16 @@ function updateLayer(index = state.layer) {
 
   const planes = [...document.querySelectorAll("#layers .layer-plane")];
   planes.forEach((plane, planeIndex) => {
+    if (state.layer < 0) {
+      plane.style.top = `${3.6 + planeIndex * 2.2}rem`;
+      plane.style.zIndex = String(3 - planeIndex);
+      plane.style.transform = "rotateX(55deg) rotateZ(-38deg) translateZ(0rem)";
+      plane.style.filter = "brightness(.6) saturate(.7)";
+      plane.style.borderColor = "rgba(237,236,225,.16)";
+      plane.style.boxShadow = "0 22px 46px -22px rgba(0,0,0,.55)";
+      return;
+    }
+
     const active = planeIndex === state.layer;
     const rank = planes.filter((_, candidate) => candidate !== state.layer).indexOf(plane);
     plane.style.top = active ? "3.2rem" : `${11.4 + rank * 2.6}rem`;
@@ -159,72 +195,204 @@ function renderSector(key = state.sector) {
 
 function activeCallMarkup() {
   return `
-    <div class="call-stage">
+    <div id="call-stage" class="call-stage is-dialling">
       <div class="call-visual">
-        <div class="call-visual-topline">
-          <span id="call-caption">CONNECTED</span>
-          <button type="button" data-action="stop-call" aria-label="Stop the demo call"><span aria-hidden="true"></span>Stop demo</button>
-        </div>
         <div class="call-speakers" aria-label="Current call speakers">
-          <div class="call-speaker" data-speaker="customer">
-            <div class="call-phone" aria-hidden="true"><span></span><strong>Riverside<br>Auto Care</strong><time id="call-clock">00:00</time></div>
+          <div class="call-party call-customer" data-speaker="customer">
+            <div class="call-phone-entry">
+              <div class="call-phone-scale">
+                <div class="call-phone" aria-hidden="true">
+                  <span class="call-phone-speaker"></span>
+                  <div id="call-dialler" class="call-dialler">
+                    <strong id="call-dial-number"></strong>
+                    <div class="call-keypad">${"<i></i>".repeat(9)}</div>
+                    <small id="call-dial-status">DIALLING…</small>
+                  </div>
+                  <div id="call-connected" class="call-phone-connected" hidden>
+                    <strong>Riverside<br>Auto Care</strong>
+                    <time id="call-clock">00:00</time>
+                    <div class="customer-bars"><i></i><i></i><i></i><i></i></div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <small>CUSTOMER</small>
           </div>
-          <div class="call-flow" aria-hidden="true"><span></span></div>
-          <div class="call-speaker" data-speaker="agent">
-            <div class="agent-orb" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="call-flow" aria-hidden="true">
+            <div class="call-flow-customer"><span></span><span></span><span></span></div>
+            <div class="call-flow-agent"><span></span><span></span><span></span></div>
+          </div>
+          <div class="call-party call-agent" data-speaker="agent">
+            <div class="agent-orb-shell" aria-hidden="true">
+              <span class="agent-ripple"></span>
+              <span class="agent-ripple"></span>
+              <div class="agent-orb"><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
             <small>AI AGENT</small>
           </div>
         </div>
+        <p id="call-caption" class="call-caption" aria-live="polite">DIALLING RIVERSIDE AUTO CARE…</p>
+        <button type="button" class="call-stop" data-action="stop-call" aria-label="Stop the demo call"><span aria-hidden="true"></span>Stop demo</button>
+        <button type="button" class="call-replay" data-action="start-call" hidden>↻ Replay the call</button>
       </div>
       <div class="call-webchat">
-        <div class="call-webchat-header"><span class="status-dot"></span> Riverside Auto Care <small>WEB CHAT, SAME BRAIN</small></div>
+        <div class="call-webchat-header"><span>RIVERSIDEAUTOCARE.CO.UK — WEB CHAT, SAME BRAIN</span><i class="status-dot"></i></div>
         <div id="call-transcript" class="call-transcript" aria-live="polite"></div>
         <div class="call-webchat-footer">SAME SCRIPT · SAME BOOKING ENGINE · TWO FRONT DOORS</div>
       </div>
     </div>
-    <div id="call-status" class="call-status" aria-live="polite">▸ Incoming call connecting…</div>
-  `;
-}
-
-function setActiveSpeaker(speaker) {
-  document.querySelectorAll(".call-speaker").forEach((element) => {
-    element.classList.toggle("is-speaking", element.dataset.speaker === speaker);
-  });
-  const caption = document.querySelector("#call-caption");
-  if (caption) caption.textContent = speaker === "customer" ? "CUSTOMER SPEAKING →" : "← AGENT SPEAKING";
-}
-
-function appendTranscript(line) {
-  const transcript = document.querySelector("#call-transcript");
-  if (!transcript) return;
-  const bubble = document.createElement("p");
-  bubble.className = line.speaker === "customer" ? "customer-message" : "agent-message";
-  bubble.textContent = line.text;
-  transcript.append(bubble);
-  transcript.scrollTop = transcript.scrollHeight;
-}
-
-function finishCall() {
-  if (!state.call.active) return;
-  const caption = document.querySelector("#call-caption");
-  const status = document.querySelector("#call-status");
-  if (caption) caption.textContent = "CALL COMPLETE — BOOKED · LOGGED · SMS CONFIRMED";
-  if (status) {
-    status.innerHTML = `
-      <div class="call-outcomes">
+    <div id="call-status" class="call-status" aria-live="polite">
+      <span id="call-status-ticker" class="call-status-ticker">▸&nbsp; <span id="call-status-copy"></span><i>▌</i></span>
+      <div id="call-outcomes" class="call-outcomes" hidden>
         <span>✓ Booked — Wed 3 Sep</span>
         <span>✓ DVSA checked — 2 advisories noted</span>
         <span>✓ SMS sent with booking details</span>
         <span>✓ Appended to existing vehicle card</span>
       </div>
-    `;
+    </div>
+  `;
+}
+
+function applyCallPresentation() {
+  const presentation = callPresentation(state.call.phase, state.call.speaker);
+  const stage = document.querySelector("#call-stage");
+  if (!stage) return;
+
+  stage.className = [
+    "call-stage",
+    `is-${state.call.phase}`,
+    presentation.customerSpeaking ? "is-customer-speaking" : "",
+    presentation.agentSpeaking ? "is-agent-speaking" : "",
+  ].filter(Boolean).join(" ");
+
+  const dialler = document.querySelector("#call-dialler");
+  const connected = document.querySelector("#call-connected");
+  const stop = document.querySelector(".call-stop");
+  const replay = document.querySelector(".call-replay");
+  const ticker = document.querySelector("#call-status-ticker");
+  const outcomes = document.querySelector("#call-outcomes");
+  if (dialler) dialler.hidden = !presentation.showDialler;
+  if (connected) connected.hidden = !presentation.showConnectedCall;
+  if (stop) stop.hidden = !presentation.showStop;
+  if (replay) replay.hidden = !presentation.showReplay;
+  if (ticker) ticker.hidden = state.call.phase === "done";
+  if (outcomes) outcomes.hidden = state.call.phase !== "done";
+
+  const caption = document.querySelector("#call-caption");
+  if (caption) {
+    if (state.call.phase === "dialling") caption.textContent = "DIALLING RIVERSIDE AUTO CARE…";
+    else if (state.call.phase === "connecting") caption.textContent = "CALLING…";
+    else if (presentation.customerSpeaking) caption.textContent = "CUSTOMER SPEAKING →";
+    else if (presentation.agentSpeaking) caption.textContent = "← AGENT SPEAKING";
+    else if (state.call.phase === "done") caption.textContent = "CALL COMPLETE — BOOKED · LOGGED · SMS CONFIRMED";
+    else caption.textContent = "CONNECTED";
   }
-  document.querySelectorAll(".call-speaker").forEach((element) => element.classList.remove("is-speaking"));
+}
+
+function setActiveSpeaker(speaker) {
+  state.call.speaker = speaker;
+  applyCallPresentation();
+}
+
+function createTranscriptLine(line) {
+  const transcript = document.querySelector("#call-transcript");
+  if (!transcript) return null;
+  const bubble = document.createElement("p");
+  bubble.className = line.speaker === "customer" ? "customer-message" : "agent-message";
+  bubble.classList.add("is-typing");
+  transcript.append(bubble);
+  transcript.scrollTop = transcript.scrollHeight;
+  return bubble;
+}
+
+function startTranscriptTyping(bubble, line, delay) {
+  if (!bubble || bubble.dataset.typingStarted === "true") return;
+  bubble.dataset.typingStarted = "true";
+
+  if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) {
+    bubble.textContent = line.text;
+    return;
+  }
+
+  clearRepeated(state.call.typingInterval);
+  let index = 0;
+  state.call.typingInterval = repeat(() => {
+    const frame = nextTypedFrame(line.text, index);
+    index = frame.nextIndex;
+    bubble.textContent = frame.text;
+    const transcript = document.querySelector("#call-transcript");
+    if (transcript) transcript.scrollTop = transcript.scrollHeight;
+    if (frame.complete) {
+      clearRepeated(state.call.typingInterval);
+      state.call.typingInterval = null;
+    }
+  }, delay);
+}
+
+function completeTranscriptLine(bubble, line) {
+  clearRepeated(state.call.typingInterval);
+  state.call.typingInterval = null;
+  if (!bubble) return;
+  bubble.classList.remove("is-typing");
+  bubble.textContent = line.text;
+  const transcript = document.querySelector("#call-transcript");
+  if (transcript) transcript.scrollTop = transcript.scrollHeight;
+}
+
+function typeCallStatus(message) {
+  const copy = document.querySelector("#call-status-copy");
+  if (!copy) return;
+  clearRepeated(state.call.statusInterval);
+  state.call.statusInterval = null;
+
+  const typeIn = () => {
+    let index = 0;
+    state.call.statusInterval = repeat(() => {
+      index += 1;
+      copy.textContent = message.slice(0, index);
+      if (index >= message.length) {
+        clearRepeated(state.call.statusInterval);
+        state.call.statusInterval = null;
+      }
+    }, 16);
+  };
+
+  if (!copy.textContent) {
+    typeIn();
+    return;
+  }
+
+  state.call.statusInterval = repeat(() => {
+    copy.textContent = copy.textContent.slice(0, -1);
+    if (!copy.textContent) {
+      clearRepeated(state.call.statusInterval);
+      state.call.statusInterval = null;
+      typeIn();
+    }
+  }, 10);
+}
+
+function finishCall() {
+  if (state.call.phase !== "playing") return;
+  clearRepeated(state.call.clockInterval);
+  state.call.clockInterval = null;
+  state.call.phase = "ending";
+  setActiveSpeaker(null);
+
+  schedule(() => {
+    typeCallStatus("Call ended.");
+    schedule(() => {
+      clearRepeated(state.call.statusInterval);
+      state.call.statusInterval = null;
+      state.call.phase = "done";
+      state.call.speaker = null;
+      applyCallPresentation();
+    }, 2400);
+  }, 1000);
 }
 
 function playCallLine(index) {
-  if (!state.call.active) return;
+  if (state.call.phase !== "playing") return;
   if (index >= CALL_SCRIPT.length) {
     finishCall();
     return;
@@ -232,55 +400,116 @@ function playCallLine(index) {
 
   const line = CALL_SCRIPT[index];
   setActiveSpeaker(line.speaker);
-  const status = document.querySelector("#call-status");
-  if (status) status.textContent = `▸ ${line.status}`;
+  typeCallStatus(line.status);
+  const bubble = createTranscriptLine(line);
 
   const audio = state.call.audio ?? new Audio();
   state.call.audio = audio;
   let advanced = false;
+  let typingStarted = false;
+  let fallbackAdvance = null;
+  let typingFallback = null;
+  let failureScheduled = false;
+
+  const beginTyping = (delay) => {
+    if (typingStarted) return;
+    typingStarted = true;
+    clearScheduled(typingFallback);
+    typingFallback = null;
+    startTranscriptTyping(bubble, line, delay);
+  };
+
   const advance = () => {
-    if (advanced || !state.call.active) return;
+    if (advanced || state.call.phase !== "playing") return;
     advanced = true;
-    appendTranscript(line);
-    schedule(() => playCallLine(index + 1), 450);
+    clearScheduled(typingFallback);
+    clearScheduled(fallbackAdvance);
+    completeTranscriptLine(bubble, line);
+    setActiveSpeaker(null);
+    schedule(() => playCallLine(index + 1), 500);
+  };
+
+  const handleAudioFailure = () => {
+    if (failureScheduled) return;
+    failureScheduled = true;
+    beginTyping(34);
+    fallbackAdvance = schedule(advance, Math.max(1600, line.text.length * 20 + 1400));
   };
 
   audio.onended = advance;
-  audio.onerror = () => schedule(advance, Math.max(1600, line.text.length * 20));
+  audio.onerror = handleAudioFailure;
+  audio.onloadedmetadata = () => beginTyping(callTypingInterval(audio.duration, line.text.length));
   audio.src = line.audio;
-  audio.play().catch(() => schedule(advance, Math.max(1600, line.text.length * 20)));
+  typingFallback = schedule(() => beginTyping(34), 900);
+  audio.play().catch(handleAudioFailure);
 }
 
 function startCall() {
-  if (state.call.active) return;
+  if (!["idle", "done"].includes(state.call.phase)) return;
   const body = document.querySelector("#call-theatre-body");
   if (!body) return;
 
-  state.call.active = true;
+  clearCallResources();
+  state.call.phase = "dialling";
+  state.call.speaker = null;
+  state.call.dialIndex = 0;
   state.call.seconds = 0;
   body.removeAttribute("style");
   body.innerHTML = activeCallMarkup();
-  repeat(() => {
-    state.call.seconds += 1;
-    const clock = document.querySelector("#call-clock");
-    if (clock) clock.textContent = formatCallClock(state.call.seconds);
-  }, 1000);
-  playCallLine(0);
+  applyCallPresentation();
+
+  state.call.dialInterval = repeat(() => {
+    const frame = nextDialFrame(state.call.dialIndex);
+    state.call.dialIndex = frame.nextIndex;
+    const number = document.querySelector("#call-dial-number");
+    if (number) number.textContent = frame.text;
+    if (!frame.complete) return;
+
+    clearRepeated(state.call.dialInterval);
+    state.call.dialInterval = null;
+    state.call.phase = "connecting";
+    const status = document.querySelector("#call-dial-status");
+    if (status) status.textContent = "CALLING…";
+    applyCallPresentation();
+    schedule(() => {
+      if (state.call.phase !== "connecting") return;
+      state.call.phase = "playing";
+      state.call.clockInterval = repeat(() => {
+        state.call.seconds += 1;
+        const clock = document.querySelector("#call-clock");
+        if (clock) clock.textContent = formatCallClock(state.call.seconds);
+      }, 1000);
+      applyCallPresentation();
+      playCallLine(0);
+    }, 1100);
+  }, 130);
 }
 
-function stopCall(reset = true) {
-  state.call.active = false;
+function clearCallResources() {
   for (const timer of state.call.timers) window.clearTimeout(timer);
   for (const interval of state.call.intervals) window.clearInterval(interval);
   state.call.timers.clear();
   state.call.intervals.clear();
+  state.call.clockInterval = null;
+  state.call.dialInterval = null;
+  state.call.typingInterval = null;
+  state.call.statusInterval = null;
 
   if (state.call.audio) {
     state.call.audio.onended = null;
     state.call.audio.onerror = null;
+    state.call.audio.onloadedmetadata = null;
     state.call.audio.pause();
     state.call.audio.currentTime = 0;
   }
+}
+
+function stopCall(reset = true) {
+  clearCallResources();
+  state.call.phase = "idle";
+  state.call.speaker = null;
+  state.call.dialIndex = 0;
+  state.call.seconds = 0;
 
   if (reset) {
     const body = document.querySelector("#call-theatre-body");
@@ -430,7 +659,7 @@ function initializeSite() {
   initialTheatreMarkup = theatreBody?.innerHTML ?? "";
 
   updateHero();
-  updateLayer(0);
+  updateLayer(-1);
   renderJourney(0);
   renderSector("garages");
   setPreviewOutcome("success");
@@ -449,10 +678,19 @@ function initializeSite() {
   document.querySelector("#assessment-form")?.addEventListener("submit", handleAssessmentSubmit);
   window.setInterval(advanceHero, 3400);
 
+  const layers = document.querySelector("#layers");
+  if (layers && "IntersectionObserver" in window) {
+    const layerObserver = new IntersectionObserver((entries) => {
+      const nextLayer = nextLayerForVisibility(state.layer, entries[0].isIntersecting);
+      if (nextLayer !== state.layer) updateLayer(nextLayer);
+    }, { threshold: 0.4 });
+    layerObserver.observe(layers);
+  }
+
   const theatre = document.querySelector("#call-theatre");
   if (theatre && "IntersectionObserver" in window) {
     const observer = new IntersectionObserver((entries) => {
-      if (!entries[0].isIntersecting && state.call.active) stopCall();
+      if (!entries[0].isIntersecting && state.call.phase !== "idle") stopCall();
     }, { threshold: 0.15 });
     observer.observe(theatre);
   }

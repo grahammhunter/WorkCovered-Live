@@ -5,7 +5,13 @@ import {
   JOURNEY_STATIONS,
   SECTORS,
   CALL_SCRIPT,
+  CALL_DIAL_NUMBER,
+  callPresentation,
+  callTypingInterval,
   nextHeroState,
+  nextDialFrame,
+  nextLayerForVisibility,
+  nextTypedFrame,
   validateAssessment,
   formatCallClock,
 } from "../assets/js/site-data.js";
@@ -58,4 +64,81 @@ test("assessment validation accepts a complete enquiry", () => {
 test("call clock uses mm:ss formatting", () => {
   assert.equal(formatCallClock(0), "00:00");
   assert.equal(formatCallClock(65), "01:05");
+});
+
+test("dialling reveals the Riverside number one character at a time", () => {
+  assert.deepEqual(nextDialFrame(0), {
+    text: "0",
+    nextIndex: 1,
+    complete: false,
+  });
+  assert.deepEqual(nextDialFrame(CALL_DIAL_NUMBER.length - 1), {
+    text: CALL_DIAL_NUMBER,
+    nextIndex: CALL_DIAL_NUMBER.length,
+    complete: true,
+  });
+});
+
+test("transcript typing advances two characters and finishes on the full sentence", () => {
+  assert.deepEqual(nextTypedFrame("Hello", 0), {
+    text: "He",
+    nextIndex: 2,
+    complete: false,
+  });
+  assert.deepEqual(nextTypedFrame("Hello", 4), {
+    text: "Hello",
+    nextIndex: 5,
+    complete: true,
+  });
+});
+
+test("transcript typing is synchronised to audio with the original fallback", () => {
+  assert.equal(callTypingInterval(undefined, 70), 34);
+  assert.equal(callTypingInterval(0.2, 70), 14);
+  assert.equal(callTypingInterval(8, 70), (8000 - 600) / 35);
+});
+
+test("in-progress call phases expose Stop but not Replay", () => {
+  assert.deepEqual(callPresentation("dialling", null), {
+    showDialler: true,
+    showConnectedCall: false,
+    showStop: true,
+    showReplay: false,
+    customerSpeaking: false,
+    agentSpeaking: false,
+  });
+  assert.deepEqual(callPresentation("playing", "customer"), {
+    showDialler: false,
+    showConnectedCall: true,
+    showStop: true,
+    showReplay: false,
+    customerSpeaking: true,
+    agentSpeaking: false,
+  });
+});
+
+test("completed calls expose Replay with every speaking effect disabled", () => {
+  assert.deepEqual(callPresentation("ending", "agent"), {
+    showDialler: false,
+    showConnectedCall: true,
+    showStop: true,
+    showReplay: false,
+    customerSpeaking: false,
+    agentSpeaking: false,
+  });
+  assert.deepEqual(callPresentation("done", "agent"), {
+    showDialler: false,
+    showConnectedCall: true,
+    showStop: false,
+    showReplay: true,
+    customerSpeaking: false,
+    agentSpeaking: false,
+  });
+});
+
+test("the layer stack opens on entry and resets to the front after exit", () => {
+  assert.equal(nextLayerForVisibility(-1, true), 0);
+  assert.equal(nextLayerForVisibility(2, false), 0);
+  assert.equal(nextLayerForVisibility(1, true), 1);
+  assert.equal(nextLayerForVisibility(0, false), 0);
 });

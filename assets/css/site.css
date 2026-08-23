@@ -1,0 +1,40 @@
+
+html{scroll-behavior:smooth}
+[id]{scroll-margin-top:4.4rem}
+body{margin:0;background:#0F1A15;color:#EDECE1;font-family:'Archivo',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#D9A441;text-decoration:none}a:hover{color:#EDECE1}
+::selection{background:#D9A441;color:#0F1A15}
+:focus{outline:none}:focus-visible{outline:2px solid #D9A441;outline-offset:3px;border-radius:2px}
+input,select,textarea,button{font:inherit}
+@keyframes wcBlink{0%,45%{opacity:1}50%,95%{opacity:.25}100%{opacity:1}}
+@keyframes wcTravel{0%{left:1%;opacity:0}2%{left:1%;opacity:1}4%{left:1%}94%{left:98%;opacity:1}98%,100%{left:98%;opacity:0}}
+@keyframes wcNode1{0%,3%{background:#1D3026;border-color:#3A4A3F}5%,96%{background:#D9A441;border-color:#D9A441}100%{background:#1D3026;border-color:#3A4A3F}}
+@keyframes wcNode2{0%,25%{background:#1D3026;border-color:#3A4A3F}28%,96%{background:#D9A441;border-color:#D9A441}100%{background:#1D3026;border-color:#3A4A3F}}
+@keyframes wcNode3{0%,48%{background:#1D3026;border-color:#3A4A3F}51%,96%{background:#D9A441;border-color:#D9A441}100%{background:#1D3026;border-color:#3A4A3F}}
+@keyframes wcNode4{0%,71%{background:#1D3026;border-color:#3A4A3F}74%,96%{background:#D9A441;border-color:#D9A441}100%{background:#1D3026;border-color:#3A4A3F}}
+@keyframes wcNode5{0%,92%{background:#1D3026;border-color:#3A4A3F}95%,96%{background:#D9A441;border-color:#D9A441}100%{background:#1D3026;border-color:#3A4A3F}}
+@keyframes wcReveal{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+@keyframes wcLineFill{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes wcMsgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes wcBeltX{0%{left:-300px}100%{left:100%}}
+@keyframes wcFaceA{0%,44%{opacity:1}52%,100%{opacity:0}}
+@keyframes wcFaceB{0%,46%{opacity:0}54%,100%{opacity:1}}
+@keyframes wcScan{0%,100%{opacity:.35;box-shadow:0 0 18px 2px rgba(217,164,65,.35)}50%{opacity:1;box-shadow:0 0 34px 6px rgba(217,164,65,.75)}}
+@keyframes wcRoll{0%{opacity:0;transform:translateY(.6em)}18%{opacity:1;transform:none}100%{opacity:1;transform:none}}
+@keyframes wcSpin{to{transform:rotate(360deg)}}
+@keyframes wcSeqA{0%,2%{opacity:0;transform:translateY(7px)}5%,90%{opacity:1;transform:none}96%,100%{opacity:0}}
+@keyframes wcSeqB{0%,19%{opacity:0;transform:translateY(7px)}23%,90%{opacity:1;transform:none}96%,100%{opacity:0}}
+@keyframes wcSeqC{0%,38%{opacity:0;transform:translateY(7px)}42%,90%{opacity:1;transform:none}96%,100%{opacity:0}}
+@keyframes wcSeqD{0%,57%{opacity:0;transform:translateY(7px)}61%,90%{opacity:1;transform:none}96%,100%{opacity:0}}
+@keyframes wcDots{0%,80%,100%{opacity:.25;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
+@keyframes wcChipP{0%,6%{background:#FFFFFF;color:#4A463E;border-color:rgba(15,26,21,.25)}13%,85%{background:#0F1A15;color:#EDECE1;border-color:#0F1A15}93%,100%{background:#FFFFFF;color:#4A463E;border-color:rgba(15,26,21,.25)}}
+@keyframes wcTickP{0%,7%{opacity:0}14%,85%{opacity:1}93%,100%{opacity:0}}
+@keyframes wcPhoneIn{0%{transform:scale(.15) rotate(-540deg);opacity:0}55%{transform:scale(1.12) rotate(12deg);opacity:1}100%{transform:scale(1) rotate(0)}}
+@keyframes wcVibe{0%,100%{transform:translate(0,0)}25%{transform:translate(1px,-1px)}50%{transform:translate(-1px,1px)}75%{transform:translate(1px,1px)}}
+@keyframes wcFlowR{0%{left:0;opacity:0}12%{opacity:1}88%{opacity:1}100%{left:calc(100% - 8px);opacity:0}}
+@keyframes wcFlowL{0%{left:calc(100% - 8px);opacity:0}12%{opacity:1}88%{opacity:1}100%{left:0;opacity:0}}
+@keyframes wcRing{0%{transform:scale(.55);opacity:.9}100%{transform:scale(1.5);opacity:0}}
+@keyframes wcBars{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
+.wc-reveal{opacity:0;animation:wcReveal .9s cubic-bezier(.22,.8,.24,1) both;animation-timeline:view();animation-range:entry 5% entry 38%}
+@supports not (animation-timeline: view()){.wc-reveal{animation:wcReveal .9s cubic-bezier(.22,.8,.24,1) both}}
+@media (prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important}html{scroll-behavior:auto}.wc-reveal{opacity:1}}

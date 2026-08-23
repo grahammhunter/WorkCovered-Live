@@ -19,7 +19,28 @@ test("all required native sections are present", () => {
 });
 
 test("production stylesheet is versioned for CDN-safe brand updates", () => {
-  assert.match(html, /assets\/css\/site\.css\?v=20260823-call-parity/);
+  assert.match(html, /assets\/css\/site\.css\?v=20260823-anchor-alignment/);
+});
+
+test("anchored sections meet the fixed header without exposing the previous section", async () => {
+  const css = await readFile(new URL("../assets/css/site.css", import.meta.url), "utf8");
+  assert.match(css, /\[id\]\{scroll-margin-top:4\.75rem\}/);
+});
+
+test("every content section uses the same compact title spacing", () => {
+  for (const label of [
+    "Three layers",
+    "Journey",
+    "Demos",
+    "Who we cover",
+    "Delivery",
+    "Proof",
+    "Assessment form",
+  ]) {
+    const openingTag = html.match(new RegExp(`<section[^>]*data-screen-label=["']${label}["'][^>]*>`))?.[0];
+    assert.ok(openingTag, `missing section: ${label}`);
+    assert.match(openingTag, /padding: clamp\(2\.2rem, 4vw, 3\.2rem\)/, `inconsistent title spacing: ${label}`);
+  }
 });
 
 test("native production files exist", async () => {

@@ -42,6 +42,9 @@ input,select,textarea,button{font:inherit}
 /* Native parity controller */
 [hidden]{display:none!important}
 body.native-site{min-height:100%;overflow-x:hidden}
+.wc-brand-link{display:flex;align-items:center;flex:0 0 auto;color:inherit}
+.wc-brand-logo{display:block;width:clamp(11.25rem,14vw,13rem);height:auto}
+.wc-brand-link--footer .wc-brand-logo{width:11.25rem}
 body.native-site>header a{transition:color .3s,background-size .35s cubic-bezier(.22,.8,.24,1),letter-spacing .35s cubic-bezier(.22,.8,.24,1)}
 body.native-site>header nav a:not(:last-child):hover{background-size:100% 100%!important;color:#0F1A15!important;letter-spacing:.16em!important}
 body.native-site>header nav a:last-child:hover{background:#D9A441;color:#0F1A15;transform:translateY(-2px);box-shadow:0 8px 22px -10px rgba(217,164,65,.55)}

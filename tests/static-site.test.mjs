@@ -18,11 +18,24 @@ test("all required native sections are present", () => {
   assert.match(html, /assets\/js\/site\.js/);
 });
 
+test("production stylesheet is versioned for CDN-safe brand updates", () => {
+  assert.match(html, /assets\/css\/site\.css\?v=20260823-logo/);
+});
+
 test("native production files exist", async () => {
   await Promise.all([
     access(new URL("../assets/css/site.css", import.meta.url)),
     access(new URL("../assets/js/site.js", import.meta.url)),
   ]);
+});
+
+test("approved Work Covered wordmark is used in the header and footer", async () => {
+  await access(new URL("../assets/brand/work-covered-logo-dark.svg", import.meta.url));
+  const wordmarks = [...html.matchAll(/<img\b[^>]*src=["']assets\/brand\/work-covered-logo-dark\.svg["'][^>]*>/gi)];
+  assert.equal(wordmarks.length, 2);
+  for (const [markup] of wordmarks) {
+    assert.match(markup, /alt=["']Work Covered["']/i);
+  }
 });
 
 test("page retains core parity copy", () => {

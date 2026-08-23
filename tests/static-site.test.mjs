@@ -55,7 +55,7 @@ test("page retains core parity copy", () => {
 
 test("page has no external script source", () => {
   const scripts = [...html.matchAll(/<script\b[^>]*\bsrc=["']([^"']+)["']/gi)].map((match) => match[1]);
-  assert.deepEqual(scripts, ["assets/js/site.js?v=20260823b"]);
+  assert.deepEqual(scripts, ["assets/js/site.js?v=20260823-clean-url"]);
 });
 
 test("browser modules use Hostinger-compatible JavaScript extensions", async () => {

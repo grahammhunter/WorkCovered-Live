@@ -41,3 +41,11 @@ test("production controller contains no external submission or AI endpoint", asy
   assert.equal(/fetch\s*\(/.test(script), false);
   assert.equal(/anthropic|claude|openai/i.test(script), false);
 });
+
+test("internal section links scroll without leaving a URL fragment", async () => {
+  const script = await readFile(new URL("../assets/js/site.js", import.meta.url), "utf8");
+  assert.match(script, /function handleSectionLink\b/);
+  assert.match(script, /event\.preventDefault\(\)/);
+  assert.match(script, /scrollIntoView\(\)/);
+  assert.match(script, /history\.replaceState\(/);
+});

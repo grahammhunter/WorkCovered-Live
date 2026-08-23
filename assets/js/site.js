@@ -6,7 +6,7 @@ import {
   formatCallClock,
   nextHeroState,
   validateAssessment,
-} from "./site-data.mjs";
+} from "./site-data.js";
 
 const state = {
   hero: { eventIndex: 0, web: 61, voice: 82 },

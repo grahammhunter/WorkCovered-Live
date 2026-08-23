@@ -28,7 +28,7 @@ The native version must preserve:
 
 - `index.html` contains semantic, browser-readable page markup.
 - `assets/css/site.css` contains all presentation and responsive rules.
-- `assets/js/site-data.mjs` contains pure data and state helpers.
+- `assets/js/site-data.js` contains pure data and state helpers.
 - `assets/js/site.js` binds behaviour to semantic DOM controls.
 - Static media remains local and is reorganised only after parity is verified.
 - Node.js may be used for tests but is not required by Hostinger or site visitors.
@@ -55,4 +55,3 @@ The native version must preserve:
 7. Browser console inspection reports no errors during the parity walkthrough.
 8. `workcovered.com` is not changed or redeployed during this phase.
 9. Deployment to `workcovered.co.uk` happens only after local parity verification and a read-only check of the current `.co.uk` state.
-

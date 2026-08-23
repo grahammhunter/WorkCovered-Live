@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { access, readFile } from "node:fs/promises";
-import { CALL_SCRIPT } from "../assets/js/site-data.mjs";
+import { CALL_SCRIPT } from "../assets/js/site-data.js";
 
 test("every call-theatre audio asset exists", async () => {
   await Promise.all(CALL_SCRIPT.map((line) => access(new URL(`../${line.audio}`, import.meta.url))));

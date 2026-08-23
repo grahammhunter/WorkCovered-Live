@@ -8,7 +8,7 @@ import {
   nextHeroState,
   validateAssessment,
   formatCallClock,
-} from "../assets/js/site-data.mjs";
+} from "../assets/js/site-data.js";
 
 test("the parity data contains every current interactive sequence", () => {
   assert.equal(HERO_EVENTS.length, 7);

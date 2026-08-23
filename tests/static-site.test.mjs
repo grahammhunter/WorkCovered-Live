@@ -42,7 +42,13 @@ test("page retains core parity copy", () => {
 
 test("page has no external script source", () => {
   const scripts = [...html.matchAll(/<script\b[^>]*\bsrc=["']([^"']+)["']/gi)].map((match) => match[1]);
-  assert.deepEqual(scripts, ["assets/js/site.js"]);
+  assert.deepEqual(scripts, ["assets/js/site.js?v=20260823b"]);
+});
+
+test("browser modules use Hostinger-compatible JavaScript extensions", async () => {
+  const siteJs = await readFile(new URL("../assets/js/site.js", import.meta.url), "utf8");
+  assert.equal(siteJs.includes(".mjs"), false);
+  await access(new URL("../assets/js/site-data.js", import.meta.url));
 });
 
 test("native CSS preserves the prototype content-box geometry", async () => {

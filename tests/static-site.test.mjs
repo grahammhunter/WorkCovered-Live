@@ -3,6 +3,16 @@ import assert from "node:assert/strict";
 import { access, readFile } from "node:fs/promises";
 
 const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
+const htaccess = await readFile(new URL("../.htaccess", import.meta.url), "utf8");
+
+test("staging hostname receives a no-index response header without affecting production", () => {
+  assert.match(htaccess, /SetEnvIfNoCase Host "\^\(www\\\.\)\?workcovered\\\.co\\\.uk\$" wc_staging/);
+  assert.match(
+    htaccess,
+    /Header always set X-Robots-Tag "noindex, nofollow" env=wc_staging/,
+  );
+  assert.equal(/workcovered\\\.com/.test(htaccess), false);
+});
 
 test("production HTML has no Design Canvas or React runtime", () => {
   for (const forbidden of ["support.js", "vendor/", "<x-dc", "<sc-if", "<sc-for", "data-dc-"]) {

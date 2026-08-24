@@ -29,7 +29,7 @@ test("all required native sections are present", () => {
 });
 
 test("production stylesheet is versioned for CDN-safe brand updates", () => {
-  assert.match(html, /assets\/css\/site\.css\?v=20260824-commercial-positioning/);
+  assert.match(html, /assets\/css\/site\.css\?v=20260824-demo-showcase/);
 });
 
 test("anchored sections meet the fixed header without exposing the previous section", async () => {
@@ -44,7 +44,7 @@ test("every content section uses the same compact title spacing", () => {
     "Demos",
     "Who we cover",
     "Delivery",
-    "Proof",
+    "Demonstrations",
     "Assessment form",
   ]) {
     const openingTag = html.match(new RegExp(`<section[^>]*data-screen-label=["']${label}["'][^>]*>`))?.[0];
@@ -120,13 +120,42 @@ test("the service interaction continues the hero naming system", () => {
   }
 });
 
+test("the demonstration showcase links only the two ready sites", () => {
+  const showcase = html.match(/<section[^>]*data-screen-label=["']Demonstrations["'][^>]*>[\s\S]*?<\/section>/)?.[0];
+  assert.ok(showcase, "missing demonstration showcase");
+  assert.match(showcase, /These are demonstration builds, not client case studies\./);
+
+  const liveCards = [...showcase.matchAll(/<a\b[^>]*class=["'][^"']*wc-demo-card[^"']*is-live[^"']*["'][^>]*>/gi)].map(
+    ([markup]) => markup,
+  );
+  assert.equal(liveCards.length, 2);
+  assert.match(liveCards[0], /href=["']https:\/\/northstar\.workcovered\.com["']/);
+  assert.match(liveCards[1], /href=["']https:\/\/riverside\.workcovered\.com["']/);
+  for (const card of liveCards) {
+    assert.match(card, /target=["']_blank["']/);
+    assert.match(card, /rel=["']noopener noreferrer["']/);
+  }
+});
+
+test("the three planned demonstrations are visible but not clickable", () => {
+  const showcase = html.match(/<section[^>]*data-screen-label=["']Demonstrations["'][^>]*>[\s\S]*?<\/section>/)?.[0];
+  assert.ok(showcase, "missing demonstration showcase");
+
+  const plannedCards = [...showcase.matchAll(/<article\b[^>]*class=["'][^"']*wc-demo-card[^"']*is-upcoming[^"']*["'][^>]*>/gi)];
+  assert.equal(plannedCards.length, 3);
+  for (const label of ["Dentist", "Plumbing trade", "Animal hospital &amp; vet"]) {
+    assert.equal(showcase.includes(label), true, `missing planned demonstration: ${label}`);
+  }
+  assert.equal(/<a\b[^>]*is-upcoming/i.test(showcase), false);
+});
+
 test("page retains the remaining approved core copy", () => {
   for (const copy of [
     "One partner, three layers",
     "Follow one enquiry, from first ring to won work.",
     "Don't take our word for it. Press the buttons.",
     "Built for businesses that live and die by the enquiry.",
-    "No borrowed logos. No invented quotes.",
+    "Different businesses. Built with the same care.",
     "Find out what's slipping through",
   ]) {
     assert.equal(html.includes(copy), true, `missing parity copy: ${copy}`);

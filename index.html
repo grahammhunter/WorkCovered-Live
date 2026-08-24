@@ -23,7 +23,7 @@
   <link href="https://fonts.googleapis.com" rel="preconnect"/>
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Archivo:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
-  <link href="assets/css/site.css?v=20260824-demo-showcase" rel="stylesheet"/>
+  <link href="assets/css/site.css?v=20260824-flip-card-preview" rel="stylesheet"/>
   <script src="assets/js/site.js?v=20260823-call-parity-2" type="module">
   </script>
  </head>
@@ -251,32 +251,32 @@
        <div aria-label="Select layer 1" class="layer-plane" data-action="select-layer" data-index="0" role="button" style="position: absolute; left: 11%; right: 11%; top: 3.6rem; aspect-ratio: 16 / 9; border-radius: 6px; overflow: hidden; cursor: pointer; z-index: 3; transform: rotateX(55deg) rotateZ(-38deg) translateZ(0rem); transition: top 0.8s cubic-bezier(0.22, 0.8, 0.24, 1), transform 0.8s cubic-bezier(0.22, 0.8, 0.24, 1), filter 0.7s, box-shadow 0.7s, border-color 0.7s; border: 1px solid rgba(237, 236, 225, 0.16); filter: brightness(0.6) saturate(0.7); box-shadow: rgba(0, 0, 0, 0.55) 0px 22px 46px -22px;" tabindex="0">
         <img alt="Layer one &mdash; the website" loading="lazy" src="media/website-layer.webp" style="position: absolute; inset: 0px; width: 100%; height: 100%; object-fit: cover;"/>
         <span style='position: absolute; left: 1rem; bottom: 1rem; font-family: "IBM Plex Mono", monospace; font-size: 0.62rem; letter-spacing: 0.14em; background: rgba(15, 26, 21, 0.85); padding: 0.35rem 0.6rem; border-radius: 2px; color: rgb(237, 236, 225);'>
-         LAYER 01 &mdash; THE WEBSITE
+         LAYER 01 &mdash; THE FRONT
         </span>
        </div>
        <div aria-label="Select layer 2" class="layer-plane" data-action="select-layer" data-index="1" role="button" style="position: absolute; left: 11%; right: 11%; top: 5.8rem; aspect-ratio: 16 / 9; border-radius: 6px; overflow: hidden; cursor: pointer; z-index: 2; transform: rotateX(55deg) rotateZ(-38deg) translateZ(0rem); transition: top 0.8s cubic-bezier(0.22, 0.8, 0.24, 1), transform 0.8s cubic-bezier(0.22, 0.8, 0.24, 1), filter 0.7s, box-shadow 0.7s, border-color 0.7s; border: 1px solid rgba(237, 236, 225, 0.16); filter: brightness(0.6) saturate(0.7); box-shadow: rgba(0, 0, 0, 0.55) 0px 22px 46px -22px;" tabindex="0">
         <img alt="Layer two &mdash; the voice assistant" loading="lazy" src="media/voice-layer.webp" style="position: absolute; inset: 0px; width: 100%; height: 100%; object-fit: cover;"/>
         <span style='position: absolute; left: 1rem; bottom: 1rem; font-family: "IBM Plex Mono", monospace; font-size: 0.62rem; letter-spacing: 0.14em; background: rgba(15, 26, 21, 0.85); padding: 0.35rem 0.6rem; border-radius: 2px; color: rgb(237, 236, 225);'>
-         LAYER 02 &mdash; THE RESPONSE
+         LAYER 02 &mdash; THE VOICE
         </span>
        </div>
        <div aria-label="Select layer 3" class="layer-plane" data-action="select-layer" data-index="2" role="button" style="position: absolute; left: 11%; right: 11%; top: 8rem; aspect-ratio: 16 / 9; border-radius: 6px; overflow: hidden; cursor: pointer; z-index: 1; transform: rotateX(55deg) rotateZ(-38deg) translateZ(0rem); transition: top 0.8s cubic-bezier(0.22, 0.8, 0.24, 1), transform 0.8s cubic-bezier(0.22, 0.8, 0.24, 1), filter 0.7s, box-shadow 0.7s, border-color 0.7s; border: 1px solid rgba(237, 236, 225, 0.16); filter: brightness(0.6) saturate(0.7); box-shadow: rgba(0, 0, 0, 0.55) 0px 22px 46px -22px;" tabindex="0">
         <img alt="Layer three &mdash; the wiring between systems" loading="lazy" src="media/wiring-layer.webp" style="position: absolute; inset: 0px; width: 100%; height: 100%; object-fit: cover;"/>
         <span style='position: absolute; left: 1rem; bottom: 1rem; font-family: "IBM Plex Mono", monospace; font-size: 0.62rem; letter-spacing: 0.14em; background: rgba(15, 26, 21, 0.85); padding: 0.35rem 0.6rem; border-radius: 2px; color: rgb(237, 236, 225);'>
-         LAYER 03 &mdash; THE FOLLOW-THROUGH
+         LAYER 03 &mdash; THE WIRING
         </span>
        </div>
       </div>
       <div>
        <div aria-label="The three layers" role="tablist" style="display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.8rem;">
         <button aria-controls="layer-panel-0" aria-selected="true" data-action="select-layer" data-index="0" id="layer-tab-0" role="tab" style='font-family: "IBM Plex Mono", monospace; font-size: 0.7rem; letter-spacing: 0.1em; padding: 0.55rem 0.95rem; border-radius: 2px; cursor: pointer; transition: background 0.3s, color 0.3s, border-color 0.3s; border: 1px solid rgb(217, 164, 65); background: rgb(217, 164, 65); color: rgb(15, 26, 21);' type="button">
-         01 &middot; THE WEBSITE
+         01 &middot; THE FRONT
         </button>
         <button aria-controls="layer-panel-1" aria-selected="false" data-action="select-layer" data-index="1" id="layer-tab-1" role="tab" style='font-family: "IBM Plex Mono", monospace; font-size: 0.7rem; letter-spacing: 0.1em; padding: 0.55rem 0.95rem; border-radius: 2px; cursor: pointer; transition: background 0.3s, color 0.3s, border-color 0.3s; border: 1px solid rgba(237, 236, 225, 0.2); background: none; color: rgba(237, 236, 225, 0.65);' type="button">
-         02 &middot; THE RESPONSE
+         02 &middot; THE VOICE
         </button>
         <button aria-controls="layer-panel-2" aria-selected="false" data-action="select-layer" data-index="2" id="layer-tab-2" role="tab" style='font-family: "IBM Plex Mono", monospace; font-size: 0.7rem; letter-spacing: 0.1em; padding: 0.55rem 0.95rem; border-radius: 2px; cursor: pointer; transition: background 0.3s, color 0.3s, border-color 0.3s; border: 1px solid rgba(237, 236, 225, 0.2); background: none; color: rgba(237, 236, 225, 0.65);' type="button">
-         03 &middot; THE FOLLOW-THROUGH
+         03 &middot; THE WIRING
         </button>
        </div>
        <div style="position: relative; min-height: 21rem;">
@@ -634,57 +634,52 @@
       <p>These are demonstration builds, not client case studies. Each shows how we would approach a different business, customer journey and operational problem.</p>
      </div>
      <div class="wc-demo-grid wc-reveal">
-      <a class="wc-demo-card wc-demo-card--featured is-live" href="https://northstar.workcovered.com" rel="noopener noreferrer" target="_blank">
-       <div aria-hidden="true" class="wc-demo-preview wc-demo-preview--cleaning">
-        <div class="wc-demo-browser-bar"><i></i><i></i><i></i><span>northstar.workcovered.com</span></div>
-        <div class="wc-demo-preview-copy"><small>Cleaning &middot; Edinburgh</small><strong>North Star</strong><span>Spaces that feel looked after.</span></div>
-       </div>
-       <div class="wc-demo-card-body">
-        <span class="wc-demo-status">Live demonstration</span>
-        <h3>North Star Cleaning</h3>
-        <p>A complete cleaning website built around clear services, quote requests and booking journeys.</p>
-        <ul class="wc-demo-tags"><li>Website design</li><li>Quote journey</li><li>Booking routes</li></ul>
-        <span class="wc-demo-link">Explore the site <b aria-hidden="true">&nearr;</b></span>
-       </div>
-      </a>
-      <a class="wc-demo-card is-live" href="https://riverside.workcovered.com" rel="noopener noreferrer" target="_blank">
-       <div aria-hidden="true" class="wc-demo-preview wc-demo-preview--garage">
-        <div class="wc-demo-browser-bar"><i></i><i></i><i></i><span>riverside.workcovered.com</span></div>
-        <div class="wc-demo-preview-copy"><small>Independent garage</small><strong>Riverside</strong><span>Book &middot; check &middot; confirm</span></div>
-       </div>
-       <div class="wc-demo-card-body">
-        <span class="wc-demo-status">Live interactive demonstration</span>
-        <h3>Riverside Auto Care</h3>
-        <p>A fictional independent-garage website with vehicle lookup, service and MOT enquiry routes, and a connected booking demonstration.</p>
-        <ul class="wc-demo-tags"><li>Website</li><li>Vehicle lookup</li><li>Booking journey</li></ul>
-        <span class="wc-demo-link">Explore the site <b aria-hidden="true">&nearr;</b></span>
+      <a aria-label="Explore the North Star Cleaning demonstration" class="wc-demo-card wc-flip-card is-live" href="https://northstar.workcovered.com" rel="noopener noreferrer" target="_blank">
+       <div class="wc-flip-card-inner">
+        <div class="wc-flip-card-front">
+         <img alt="North Star Cleaning website preview" height="1000" loading="lazy" src="media/demos/northstar-preview.png" width="1440"/>
+         <div class="wc-flip-card-front-copy"><span>Live demonstration</span><strong>North Star Cleaning</strong><small>Cleaning &middot; Edinburgh</small><b>Hover to look behind the site</b></div>
+        </div>
+        <div class="wc-flip-card-back">
+         <span class="wc-demo-back-number">01 &middot; Live</span>
+         <strong>North Star Cleaning</strong>
+         <p>A customer-facing cleaning website built around trust, service clarity, quote requests and guided booking journeys.</p>
+         <ul class="wc-demo-tags"><li>Website design</li><li>Quote journey</li><li>Booking routes</li></ul>
+         <span class="wc-demo-link">Visit the live site <b aria-hidden="true">&nearr;</b></span>
+        </div>
        </div>
       </a>
-      <article aria-label="Dentist demonstration in development" class="wc-demo-card is-upcoming">
-       <div aria-hidden="true" class="wc-demo-preview wc-demo-preview--planned"><span>01</span><strong>Dentist</strong><small>In development</small></div>
-       <div class="wc-demo-card-body">
-        <span class="wc-demo-status">In development</span>
-        <h3>Dentist</h3>
-        <p>A calmer patient journey from first search to registration, appointment request and routine questions.</p>
-        <ul class="wc-demo-tags"><li>Patient website</li><li>Appointment route</li><li>Routine enquiries</li></ul>
+      <a aria-label="Explore the Riverside Auto Care demonstration" class="wc-demo-card wc-flip-card is-live" href="https://riverside.workcovered.com" rel="noopener noreferrer" target="_blank">
+       <div class="wc-flip-card-inner">
+        <div class="wc-flip-card-front">
+         <img alt="Riverside Auto Care website preview" height="1000" loading="lazy" src="media/demos/riverside-preview.png" width="1440"/>
+         <div class="wc-flip-card-front-copy"><span>Live interactive demonstration</span><strong>Riverside Auto Care</strong><small>Independent garage</small><b>Hover to look behind the site</b></div>
+        </div>
+        <div class="wc-flip-card-back">
+         <span class="wc-demo-back-number">02 &middot; Live</span>
+         <strong>Riverside Auto Care</strong>
+         <p>A fictional independent-garage website with vehicle lookup, service and MOT enquiry routes, and a connected booking demonstration.</p>
+         <ul class="wc-demo-tags"><li>Website</li><li>Vehicle lookup</li><li>Booking journey</li></ul>
+         <span class="wc-demo-link">Visit the live site <b aria-hidden="true">&nearr;</b></span>
+        </div>
+       </div>
+      </a>
+      <article aria-label="Dentist demonstration in development" class="wc-demo-card wc-flip-card is-upcoming" tabindex="0">
+       <div class="wc-flip-card-inner">
+        <div class="wc-flip-card-front wc-flip-card-front--planned wc-flip-card-front--dentist"><span>Next in the series</span><strong>Dentist</strong><small>Patient journeys without the waiting-room feel.</small><b>Hover to see the brief</b></div>
+        <div class="wc-flip-card-back"><span class="wc-demo-back-number">03 &middot; In development</span><strong>Dentist</strong><p>A calmer patient journey from first search to registration, appointment request and routine questions.</p><ul class="wc-demo-tags"><li>Patient website</li><li>Appointment route</li><li>Routine enquiries</li></ul><span class="wc-demo-pending">Preview coming soon</span></div>
        </div>
       </article>
-      <article aria-label="Plumbing trade demonstration in development" class="wc-demo-card is-upcoming">
-       <div aria-hidden="true" class="wc-demo-preview wc-demo-preview--planned"><span>02</span><strong>Plumbing trade</strong><small>In development</small></div>
-       <div class="wc-demo-card-body">
-        <span class="wc-demo-status">In development</span>
-        <h3>Plumbing trade</h3>
-        <p>A trade website designed to separate emergency calls from planned work and keep quote requests moving.</p>
-        <ul class="wc-demo-tags"><li>Trade website</li><li>Urgency routing</li><li>Quote follow-up</li></ul>
+      <article aria-label="Plumbing trade demonstration in development" class="wc-demo-card wc-flip-card is-upcoming" tabindex="0">
+       <div class="wc-flip-card-inner">
+        <div class="wc-flip-card-front wc-flip-card-front--planned wc-flip-card-front--plumbing"><span>Next in the series</span><strong>Plumbing trade</strong><small>Emergency work separated from the everyday.</small><b>Hover to see the brief</b></div>
+        <div class="wc-flip-card-back"><span class="wc-demo-back-number">04 &middot; In development</span><strong>Plumbing trade</strong><p>A trade website designed to separate emergency calls from planned work and keep quote requests moving.</p><ul class="wc-demo-tags"><li>Trade website</li><li>Urgency routing</li><li>Quote follow-up</li></ul><span class="wc-demo-pending">Preview coming soon</span></div>
        </div>
       </article>
-      <article aria-label="Animal hospital and vet demonstration in development" class="wc-demo-card is-upcoming">
-       <div aria-hidden="true" class="wc-demo-preview wc-demo-preview--planned"><span>03</span><strong>Animal hospital</strong><small>In development</small></div>
-       <div class="wc-demo-card-body">
-        <span class="wc-demo-status">In development</span>
-        <h3>Animal hospital &amp; vet</h3>
-        <p>A reassuring website with clear service routes, urgent-care signposting and appointment enquiries.</p>
-        <ul class="wc-demo-tags"><li>Practice website</li><li>Clear signposting</li><li>Appointment enquiries</li></ul>
+      <article aria-label="Animal hospital and vet demonstration in development" class="wc-demo-card wc-flip-card is-upcoming" tabindex="0">
+       <div class="wc-flip-card-inner">
+        <div class="wc-flip-card-front wc-flip-card-front--planned wc-flip-card-front--vet"><span>Next in the series</span><strong>Animal hospital &amp; vet</strong><small>Reassurance and clear routes when it matters.</small><b>Hover to see the brief</b></div>
+        <div class="wc-flip-card-back"><span class="wc-demo-back-number">05 &middot; In development</span><strong>Animal hospital &amp; vet</strong><p>A reassuring website with clear service routes, urgent-care signposting and appointment enquiries.</p><ul class="wc-demo-tags"><li>Practice website</li><li>Clear signposting</li><li>Appointment enquiries</li></ul><span class="wc-demo-pending">Preview coming soon</span></div>
        </div>
       </article>
      </div>

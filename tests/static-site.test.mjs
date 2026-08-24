@@ -29,7 +29,7 @@ test("all required native sections are present", () => {
 });
 
 test("production stylesheet is versioned for CDN-safe brand updates", () => {
-  assert.match(html, /assets\/css\/site\.css\?v=20260824-demo-showcase/);
+  assert.match(html, /assets\/css\/site\.css\?v=20260824-flip-card-preview/);
 });
 
 test("anchored sections meet the fixed header without exposing the previous section", async () => {
@@ -111,11 +111,11 @@ test("page explains the commercial return without unsupported performance claims
   assert.equal(/guaranteed|\d+%|payback in \d+/i.test(commercialReturn), false);
 });
 
-test("the service interaction continues the hero naming system", () => {
+test("the service interaction retains the compact layer labels", () => {
   const layers = html.match(/<section[^>]*id=["']layers["'][^>]*>[\s\S]*?<\/section>/)?.[0];
   assert.ok(layers, "missing service layers section");
 
-  for (const label of ["THE WEBSITE", "THE RESPONSE", "THE FOLLOW-THROUGH"]) {
+  for (const label of ["THE FRONT", "THE VOICE", "THE WIRING"]) {
     assert.equal(layers.includes(label), true, `missing service label: ${label}`);
   }
 });
@@ -146,6 +146,29 @@ test("the three planned demonstrations are visible but not clickable", () => {
   for (const label of ["Dentist", "Plumbing trade", "Animal hospital &amp; vet"]) {
     assert.equal(showcase.includes(label), true, `missing planned demonstration: ${label}`);
   }
+  assert.equal(/<a\b[^>]*is-upcoming/i.test(showcase), false);
+});
+
+test("all five demonstrations use the same two-faced flip-card component", () => {
+  const showcase = html.match(/<section[^>]*data-screen-label=["']Demonstrations["'][^>]*>[\s\S]*?<\/section>/)?.[0];
+  assert.ok(showcase, "missing demonstration showcase");
+
+  const classLists = [...showcase.matchAll(/class=["']([^"']*)["']/g)].map(([, value]) => value.split(/\s+/));
+  assert.equal((showcase.match(/class=["'][^"']*wc-demo-card[^"']*wc-flip-card[^"']*["']/g) ?? []).length, 5);
+  assert.equal(classLists.filter((classes) => classes.includes("wc-flip-card-front")).length, 5);
+  assert.equal(classLists.filter((classes) => classes.includes("wc-flip-card-back")).length, 5);
+  assert.equal(showcase.includes("wc-demo-card--featured"), false);
+});
+
+test("planned flip cards can reveal their brief without becoming links", () => {
+  const showcase = html.match(/<section[^>]*data-screen-label=["']Demonstrations["'][^>]*>[\s\S]*?<\/section>/)?.[0];
+  assert.ok(showcase, "missing demonstration showcase");
+
+  const plannedCards = [...showcase.matchAll(/<article\b[^>]*class=["'][^"']*wc-flip-card[^"']*is-upcoming[^"']*["'][^>]*>/gi)].map(
+    ([markup]) => markup,
+  );
+  assert.equal(plannedCards.length, 3);
+  for (const card of plannedCards) assert.match(card, /tabindex=["']0["']/);
   assert.equal(/<a\b[^>]*is-upcoming/i.test(showcase), false);
 });
 

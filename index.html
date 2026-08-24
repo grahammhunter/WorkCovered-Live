@@ -23,7 +23,7 @@
   <link href="https://fonts.googleapis.com" rel="preconnect"/>
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Archivo:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
-  <link href="assets/css/site.css?v=20260823-anchor-alignment" rel="stylesheet"/>
+  <link href="assets/css/site.css?v=20260824-commercial-positioning" rel="stylesheet"/>
   <script src="assets/js/site.js?v=20260823-call-parity-2" type="module">
   </script>
  </head>
@@ -51,41 +51,52 @@
    </nav>
   </header>
   <main>
-   <section aria-label="Introduction" data-screen-label="Hero" id="top" style="position: relative; overflow: hidden; background: rgb(15, 26, 21);">
-    <div style="position: relative; padding: calc(4rem + clamp(1.5rem, 3vw, 2.5rem)) clamp(1.25rem, 4vw, 4rem) 13.5rem; max-width: 72rem; margin: 0px auto; display: flex; gap: 3rem; align-items: flex-start; justify-content: space-between; flex-wrap: wrap;">
-     <div style="max-width: 44rem;">
-      <p style='font-family: "IBM Plex Mono", monospace; font-size: 0.78rem; color: rgb(217, 164, 65); letter-spacing: 0.14em; margin: 0px 0px 1.6rem;'>
-       <span style="animation: 2s ease 0s infinite normal none running wcBlink;">
-        ●
-       </span>
-       &nbsp; RUNNING NOW &mdash; NOTHING WAITS FOR MORNING
+   <section aria-label="Introduction" class="wc-hero" data-screen-label="Hero" id="top" style="position: relative; overflow: hidden; background: rgb(15, 26, 21);">
+    <div class="wc-hero-main" style="position: relative; padding: calc(4rem + clamp(1.5rem, 3vw, 2.5rem)) clamp(1.25rem, 4vw, 4rem) 13.5rem; max-width: 72rem; margin: 0px auto; display: flex; gap: 3rem; align-items: flex-start; justify-content: space-between; flex-wrap: wrap;">
+     <div class="wc-hero-copy" style="max-width: 44rem;">
+      <p class="wc-hero-eyebrow" style='font-family: "IBM Plex Mono", monospace; font-size: 0.78rem; color: rgb(217, 164, 65); letter-spacing: 0.14em; margin: 0px 0px 1.6rem;'>
+       WEBSITES &middot; AI ASSISTANCE &middot; JOINED-UP SYSTEMS
       </p>
       <h1 style='font-family: "Instrument Serif", Georgia, serif; font-weight: 400; font-size: clamp(2.6rem, 5.2vw, 4.1rem); line-height: 1.02; letter-spacing: -0.01em; margin: 0px; max-width: 15ch; text-wrap: balance;'>
-       Enquiries go in.
+       Built to be chosen.
        <em style="font-style: italic; color: rgb(217, 164, 65);">
-        Finished work comes out.
+        Wired to respond.
        </em>
       </h1>
       <p style="font-size: clamp(1.02rem, 1.3vw, 1.15rem); line-height: 1.6; color: rgba(237, 236, 225, 0.72); max-width: 32rem; margin: 1.3rem 0px 1.8rem;">
-       Every call, chat and 3am emergency rides the same line: answered, qualified, booked, paid and logged &mdash; without touching your day. Websites, AI assistance and automation for owner-led UK businesses.
+       Distinctive websites for established UK businesses, connected to the assistance and follow-up that turn more suitable enquiries into booked work.
       </p>
       <div style="display: flex; flex-wrap: wrap; gap: 1.2rem; align-items: center;">
-       <a href="#assessment" style="background: rgb(217, 164, 65); color: rgb(15, 26, 21); font-weight: 600; font-size: 0.95rem; padding: 0.95rem 1.6rem; border-radius: 4px;">
-        Book a cover assessment
+       <a href="#layers" style="background: rgb(217, 164, 65); color: rgb(15, 26, 21); font-weight: 600; font-size: 0.95rem; padding: 0.95rem 1.6rem; border-radius: 4px;">
+        See what we cover
        </a>
-       <a href="#demos" style='font-family: "IBM Plex Mono", monospace; font-size: 0.8rem; letter-spacing: 0.08em; color: rgb(237, 236, 225); border-bottom: 1px solid rgba(237, 236, 225, 0.4); padding-bottom: 3px;'>
-        &rtrif; SEE IT WORKING
+       <a href="#journey" style='font-family: "IBM Plex Mono", monospace; font-size: 0.8rem; letter-spacing: 0.08em; color: rgb(237, 236, 225); border-bottom: 1px solid rgba(237, 236, 225, 0.4); padding-bottom: 3px;'>
+        &rtrif; WATCH ONE ENQUIRY
        </a>
       </div>
      </div>
-     <div style="width: 280px; border: 1px solid rgba(237, 236, 225, 0.14); border-radius: 4px; background: rgba(22, 36, 29, 0.6);">
+     <ol class="wc-hero-index" aria-label="What Work Covered connects">
+      <li>
+       <span>01</span>
+       <div><strong>The website</strong><p>Designed around how your customers choose.</p></div>
+      </li>
+      <li>
+       <span>02</span>
+       <div><strong>The response</strong><p>Calls and web enquiries handled when your team cannot.</p></div>
+      </li>
+      <li>
+       <span>03</span>
+       <div><strong>The follow-through</strong><p>Booking, CRM and follow-up connected behind the scenes.</p></div>
+      </li>
+     </ol>
+     <div class="wc-hero-activity" style="width: 280px; border: 1px solid rgba(237, 236, 225, 0.14); border-radius: 4px; background: rgba(22, 36, 29, 0.6);">
       <div style='padding: 0.85rem 1.2rem; border-bottom: 1px solid rgba(237, 236, 225, 0.12); font-family: "IBM Plex Mono", monospace; font-size: 0.6rem; letter-spacing: 0.16em; color: rgba(237, 236, 225, 0.5);'>
-       TONIGHT'S RUN &mdash; LIVE
+       ILLUSTRATIVE ENQUIRY FLOW
       </div>
       <div style="padding: 1.1rem 1.2rem; display: flex; flex-direction: column; gap: 1.05rem;">
        <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 0.8rem;">
         <span style='font-family: "IBM Plex Mono", monospace; font-size: 0.7rem; letter-spacing: 0.08em; color: rgba(237, 236, 225, 0.7);'>
-         Web enquiries
+         Web enquiries handled
         </span>
         <span id="hero-web-count" style='font-family: "Instrument Serif", Georgia, serif; font-size: 1.9rem; color: rgb(237, 236, 225); display: inline-block; animation: 0.5s ease-out 0s 1 normal none running wcRoll;'>
          63
@@ -93,7 +104,7 @@
        </div>
        <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 0.8rem;">
         <span style='font-family: "IBM Plex Mono", monospace; font-size: 0.7rem; letter-spacing: 0.08em; color: rgba(237, 236, 225, 0.7);'>
-         Voice assistant enquiries
+         Voice enquiries answered
         </span>
         <span id="hero-voice-count" style='font-family: "Instrument Serif", Georgia, serif; font-size: 1.9rem; color: rgb(78, 169, 124); display: inline-block; animation: 0.5s ease-out 0s 1 normal none running wcRoll;'>
          84
@@ -101,7 +112,7 @@
        </div>
        <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 0.8rem;">
         <span style='font-family: "IBM Plex Mono", monospace; font-size: 0.7rem; letter-spacing: 0.08em; color: rgba(237, 236, 225, 0.7);'>
-         Missed
+         Still waiting
         </span>
         <span style='font-family: "Instrument Serif", Georgia, serif; font-size: 1.9rem; color: rgb(217, 164, 65);'>
          0
@@ -109,6 +120,7 @@
        </div>
       </div>
       <div style="padding: 0.8rem 1.2rem; border-top: 1px solid rgba(237, 236, 225, 0.12);">
+       <span class="wc-hero-activity-label">WHEN YOU'RE BUSY, WORK KEEPS MOVING</span>
        <p id="hero-event" style='font-family: "IBM Plex Mono", monospace; font-size: 0.66rem; letter-spacing: 0.04em; line-height: 1.6; color: rgba(237, 236, 225, 0.65); margin: 0px; animation: 0.5s ease-out 0s 1 normal none running wcRoll;'>
         &rtrif;
         12:51 &mdash; Lunchtime caller helped while the desk was on another line
@@ -116,7 +128,7 @@
       </div>
      </div>
     </div>
-    <div aria-hidden="true" style="position: absolute; left: 0px; right: 0px; bottom: 0px; height: 200px; pointer-events: none;">
+    <div aria-hidden="true" class="wc-hero-conveyor" style="position: absolute; left: 0px; right: 0px; bottom: 0px; height: 200px; pointer-events: none;">
      <div style="position: absolute; left: 0px; right: 0px; top: 148px; height: 1px; background: rgba(237, 236, 225, 0.18);">
      </div>
      <div style="position: absolute; left: 0px; right: 0px; top: 152px; height: 1px; background: rgba(237, 236, 225, 0.08);">
@@ -188,6 +200,39 @@
      </div>
     </div>
    </section>
+   <section aria-labelledby="return-h" class="wc-return" data-screen-label="Commercial return" id="return">
+    <div class="wc-return-inner">
+     <div class="wc-return-intro wc-reveal">
+      <p class="wc-section-kicker">The commercial case</p>
+      <h2 id="return-h">Start with the work already trying to reach you.</h2>
+      <p>A better system does not need an extravagant claim to justify itself. It needs to improve the moments where a customer chooses, where an enquiry might be missed, and where your team repeats work a system could carry.</p>
+     </div>
+     <ol class="wc-return-levers wc-reveal">
+      <li>
+       <span>01</span>
+       <h3>More suitable enquiries</h3>
+       <p>A website that earns trust quickly and makes the next step obvious to the customers you want.</p>
+      </li>
+      <li>
+       <span>02</span>
+       <h3>Fewer missed opportunities</h3>
+       <p>Calls and web enquiries acknowledged when your team is on a job, with a customer or off the clock.</p>
+      </li>
+      <li>
+       <span>03</span>
+       <h3>Less repeated admin</h3>
+       <p>Details captured once, then carried into booking, CRM and follow-up without another round of typing.</p>
+      </li>
+     </ol>
+     <div class="wc-return-equation wc-reveal">
+      <p><span>Work won</span><b>+</b><span>hours returned</span><b>&minus;</b><span>ongoing cost</span><b>=</b><strong>the case for change</strong></p>
+      <div>
+       <h3>Your numbers, before our proposal.</h3>
+       <p>We use your figures: average job value, enquiries that currently go unanswered, and time spent chasing or re-entering information. If the arithmetic does not make sense, we will say so.</p>
+      </div>
+     </div>
+    </div>
+   </section>
    <section aria-labelledby="layers-h" data-screen-label="Three layers" id="layers" style="padding: clamp(2.2rem, 4vw, 3.2rem) clamp(1.25rem, 4vw, 4rem) clamp(3rem, 5vw, 4rem); overflow: hidden;">
     <div style="max-width: 72rem; margin: 0px auto;">
      <div class="wc-reveal" style="max-width: 60rem; margin-bottom: 1.6rem;">
@@ -206,32 +251,32 @@
        <div aria-label="Select layer 1" class="layer-plane" data-action="select-layer" data-index="0" role="button" style="position: absolute; left: 11%; right: 11%; top: 3.6rem; aspect-ratio: 16 / 9; border-radius: 6px; overflow: hidden; cursor: pointer; z-index: 3; transform: rotateX(55deg) rotateZ(-38deg) translateZ(0rem); transition: top 0.8s cubic-bezier(0.22, 0.8, 0.24, 1), transform 0.8s cubic-bezier(0.22, 0.8, 0.24, 1), filter 0.7s, box-shadow 0.7s, border-color 0.7s; border: 1px solid rgba(237, 236, 225, 0.16); filter: brightness(0.6) saturate(0.7); box-shadow: rgba(0, 0, 0, 0.55) 0px 22px 46px -22px;" tabindex="0">
         <img alt="Layer one &mdash; the website" loading="lazy" src="media/website-layer.webp" style="position: absolute; inset: 0px; width: 100%; height: 100%; object-fit: cover;"/>
         <span style='position: absolute; left: 1rem; bottom: 1rem; font-family: "IBM Plex Mono", monospace; font-size: 0.62rem; letter-spacing: 0.14em; background: rgba(15, 26, 21, 0.85); padding: 0.35rem 0.6rem; border-radius: 2px; color: rgb(237, 236, 225);'>
-         LAYER 01 &mdash; THE FRONT
+         LAYER 01 &mdash; THE WEBSITE
         </span>
        </div>
        <div aria-label="Select layer 2" class="layer-plane" data-action="select-layer" data-index="1" role="button" style="position: absolute; left: 11%; right: 11%; top: 5.8rem; aspect-ratio: 16 / 9; border-radius: 6px; overflow: hidden; cursor: pointer; z-index: 2; transform: rotateX(55deg) rotateZ(-38deg) translateZ(0rem); transition: top 0.8s cubic-bezier(0.22, 0.8, 0.24, 1), transform 0.8s cubic-bezier(0.22, 0.8, 0.24, 1), filter 0.7s, box-shadow 0.7s, border-color 0.7s; border: 1px solid rgba(237, 236, 225, 0.16); filter: brightness(0.6) saturate(0.7); box-shadow: rgba(0, 0, 0, 0.55) 0px 22px 46px -22px;" tabindex="0">
         <img alt="Layer two &mdash; the voice assistant" loading="lazy" src="media/voice-layer.webp" style="position: absolute; inset: 0px; width: 100%; height: 100%; object-fit: cover;"/>
         <span style='position: absolute; left: 1rem; bottom: 1rem; font-family: "IBM Plex Mono", monospace; font-size: 0.62rem; letter-spacing: 0.14em; background: rgba(15, 26, 21, 0.85); padding: 0.35rem 0.6rem; border-radius: 2px; color: rgb(237, 236, 225);'>
-         LAYER 02 &mdash; THE VOICE
+         LAYER 02 &mdash; THE RESPONSE
         </span>
        </div>
        <div aria-label="Select layer 3" class="layer-plane" data-action="select-layer" data-index="2" role="button" style="position: absolute; left: 11%; right: 11%; top: 8rem; aspect-ratio: 16 / 9; border-radius: 6px; overflow: hidden; cursor: pointer; z-index: 1; transform: rotateX(55deg) rotateZ(-38deg) translateZ(0rem); transition: top 0.8s cubic-bezier(0.22, 0.8, 0.24, 1), transform 0.8s cubic-bezier(0.22, 0.8, 0.24, 1), filter 0.7s, box-shadow 0.7s, border-color 0.7s; border: 1px solid rgba(237, 236, 225, 0.16); filter: brightness(0.6) saturate(0.7); box-shadow: rgba(0, 0, 0, 0.55) 0px 22px 46px -22px;" tabindex="0">
         <img alt="Layer three &mdash; the wiring between systems" loading="lazy" src="media/wiring-layer.webp" style="position: absolute; inset: 0px; width: 100%; height: 100%; object-fit: cover;"/>
         <span style='position: absolute; left: 1rem; bottom: 1rem; font-family: "IBM Plex Mono", monospace; font-size: 0.62rem; letter-spacing: 0.14em; background: rgba(15, 26, 21, 0.85); padding: 0.35rem 0.6rem; border-radius: 2px; color: rgb(237, 236, 225);'>
-         LAYER 03 &mdash; THE WIRING
+         LAYER 03 &mdash; THE FOLLOW-THROUGH
         </span>
        </div>
       </div>
       <div>
        <div aria-label="The three layers" role="tablist" style="display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.8rem;">
         <button aria-controls="layer-panel-0" aria-selected="true" data-action="select-layer" data-index="0" id="layer-tab-0" role="tab" style='font-family: "IBM Plex Mono", monospace; font-size: 0.7rem; letter-spacing: 0.1em; padding: 0.55rem 0.95rem; border-radius: 2px; cursor: pointer; transition: background 0.3s, color 0.3s, border-color 0.3s; border: 1px solid rgb(217, 164, 65); background: rgb(217, 164, 65); color: rgb(15, 26, 21);' type="button">
-         01 &middot; THE FRONT
+         01 &middot; THE WEBSITE
         </button>
         <button aria-controls="layer-panel-1" aria-selected="false" data-action="select-layer" data-index="1" id="layer-tab-1" role="tab" style='font-family: "IBM Plex Mono", monospace; font-size: 0.7rem; letter-spacing: 0.1em; padding: 0.55rem 0.95rem; border-radius: 2px; cursor: pointer; transition: background 0.3s, color 0.3s, border-color 0.3s; border: 1px solid rgba(237, 236, 225, 0.2); background: none; color: rgba(237, 236, 225, 0.65);' type="button">
-         02 &middot; THE VOICE
+         02 &middot; THE RESPONSE
         </button>
         <button aria-controls="layer-panel-2" aria-selected="false" data-action="select-layer" data-index="2" id="layer-tab-2" role="tab" style='font-family: "IBM Plex Mono", monospace; font-size: 0.7rem; letter-spacing: 0.1em; padding: 0.55rem 0.95rem; border-radius: 2px; cursor: pointer; transition: background 0.3s, color 0.3s, border-color 0.3s; border: 1px solid rgba(237, 236, 225, 0.2); background: none; color: rgba(237, 236, 225, 0.65);' type="button">
-         03 &middot; THE WIRING
+         03 &middot; THE FOLLOW-THROUGH
         </button>
        </div>
        <div style="position: relative; min-height: 21rem;">

@@ -21,7 +21,7 @@ test("production HTML has no Design Canvas or React runtime", () => {
 });
 
 test("all required native sections are present", () => {
-  for (const id of ["top", "layers", "journey", "demos", "delivery", "assessment"]) {
+  for (const id of ["top", "return", "layers", "journey", "demos", "delivery", "assessment"]) {
     assert.match(html, new RegExp(`id=["']${id}["']`));
   }
   assert.match(html, /assets\/css\/site\.css/);
@@ -29,7 +29,7 @@ test("all required native sections are present", () => {
 });
 
 test("production stylesheet is versioned for CDN-safe brand updates", () => {
-  assert.match(html, /assets\/css\/site\.css\?v=20260823-anchor-alignment/);
+  assert.match(html, /assets\/css\/site\.css\?v=20260824-commercial-positioning/);
 });
 
 test("anchored sections meet the fixed header without exposing the previous section", async () => {
@@ -69,10 +69,59 @@ test("approved Work Covered wordmark is used in the header and footer", async ()
   }
 });
 
-test("page retains core parity copy", () => {
+test("page presents the approved editorial hero without live-data claims", () => {
+  const hero = html.match(/<section[^>]*id=["']top["'][^>]*>[\s\S]*?<\/section>/)?.[0];
+  assert.ok(hero, "missing hero section");
+
   for (const copy of [
-    "Enquiries go in.",
-    "Finished work comes out.",
+    "Built to be chosen.",
+    "Wired to respond.",
+    "The website",
+    "The response",
+    "The follow-through",
+    "ILLUSTRATIVE ENQUIRY FLOW",
+    "WHEN YOU'RE BUSY, WORK KEEPS MOVING",
+  ]) {
+    assert.equal(hero.includes(copy), true, `missing hero copy: ${copy}`);
+  }
+
+  for (const id of ["hero-web-count", "hero-voice-count", "hero-event"]) {
+    assert.match(hero, new RegExp(`id=["']${id}["']`));
+  }
+
+  for (const misleading of ["RUNNING NOW", "TONIGHT'S RUN", "— LIVE"]) {
+    assert.equal(hero.includes(misleading), false, `misleading illustrative activity: ${misleading}`);
+  }
+});
+
+test("page explains the commercial return without unsupported performance claims", () => {
+  const commercialReturn = html.match(/<section[^>]*id=["']return["'][^>]*>[\s\S]*?<\/section>/)?.[0];
+  assert.ok(commercialReturn, "missing commercial return section");
+
+  for (const copy of [
+    "More suitable enquiries",
+    "Fewer missed opportunities",
+    "Less repeated admin",
+    "your figures",
+    "If the arithmetic does not make sense, we will say so.",
+  ]) {
+    assert.equal(commercialReturn.includes(copy), true, `missing return principle: ${copy}`);
+  }
+
+  assert.equal(/guaranteed|\d+%|payback in \d+/i.test(commercialReturn), false);
+});
+
+test("the service interaction continues the hero naming system", () => {
+  const layers = html.match(/<section[^>]*id=["']layers["'][^>]*>[\s\S]*?<\/section>/)?.[0];
+  assert.ok(layers, "missing service layers section");
+
+  for (const label of ["THE WEBSITE", "THE RESPONSE", "THE FOLLOW-THROUGH"]) {
+    assert.equal(layers.includes(label), true, `missing service label: ${label}`);
+  }
+});
+
+test("page retains the remaining approved core copy", () => {
+  for (const copy of [
     "One partner, three layers",
     "Follow one enquiry, from first ring to won work.",
     "Don't take our word for it. Press the buttons.",
